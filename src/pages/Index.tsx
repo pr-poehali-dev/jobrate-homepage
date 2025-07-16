@@ -17,11 +17,11 @@ const Index = () => {
 
   const popularCompanies = [
     { name: 'Яндекс', rating: 4.2, reviews: 1243, logo: '🟡' },
-    { name: 'Сбер', rating: 3.8, reviews: 2156, logo: '🟢' },
+    { name: 'Сбербанк', rating: 3.8, reviews: 2156, logo: '🟢' },
     { name: 'ВКонтакте', rating: 4.0, reviews: 834, logo: '🔵' },
-    { name: 'Озон', rating: 3.5, reviews: 567, logo: '🟣' },
+    { name: 'Ozon', rating: 3.5, reviews: 567, logo: '🟣' },
     { name: 'Wildberries', rating: 3.7, reviews: 789, logo: '🟤' },
-    { name: 'Тинькофф', rating: 4.3, reviews: 1098, logo: '🟡' },
+    { name: 'Тинькофф Банк', rating: 4.3, reviews: 1098, logo: '🟡' },
   ];
 
   const cities = [
@@ -80,21 +80,27 @@ const Index = () => {
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary/10 via-background to-accent/10 py-20">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            JobRate — отзывы о работодателях
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-primary">
+            JobRate — отзывы о работодателях, зарплаты и вакансии
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Найдите честную информацию о компаниях, зарплатах и условиях работы от реальных сотрудников
+          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+            Ищете работу? Узнайте правду о работодателях из первых рук. Реальные отзывы сотрудников, актуальные данные о зарплатах и честная информация об условиях труда.
           </p>
           
-          <div className="max-w-md mx-auto flex gap-2">
-            <Input 
-              placeholder="Поиск компаний..."
-              className="flex-1"
-            />
-            <Button>
-              <Icon name="Search" size={20} />
-            </Button>
+          <div className="max-w-lg mx-auto">
+            <div className="flex gap-2 mb-4">
+              <Input 
+                placeholder="Введите название компании..."
+                className="flex-1 h-12 text-base"
+              />
+              <Button size="lg" className="px-8 h-12">
+                <Icon name="Search" size={20} className="mr-2" />
+                Найти
+              </Button>
+            </div>
+            <p className="text-sm text-muted-foreground text-center">
+              Например: Яндекс, Сбер, ВКонтакте, Озон
+            </p>
           </div>
           
           <div className="mt-8 flex flex-wrap justify-center gap-2">
@@ -147,14 +153,29 @@ const Index = () => {
                       <div>
                         <h3 className="font-semibold">{company.name}</h3>
                         <div className="flex items-center space-x-1">
-                          <span className="text-amber-500">★</span>
-                          <span className="text-sm font-medium">{company.rating}</span>
+                          <div className="flex">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                              <span 
+                                key={star} 
+                                className={`text-sm ${
+                                  star <= Math.floor(company.rating) 
+                                    ? 'text-amber-500' 
+                                    : star - 0.5 <= company.rating 
+                                    ? 'text-amber-300' 
+                                    : 'text-gray-300'
+                                }`}
+                              >
+                                ★
+                              </span>
+                            ))}
+                          </div>
+                          <span className="text-sm font-medium ml-1">{company.rating}</span>
                         </div>
                       </div>
                     </div>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    {company.reviews} отзывов
+                    {company.reviews.toLocaleString()} отзывов
                   </p>
                 </CardContent>
               </Card>
@@ -262,7 +283,7 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-dark text-white py-12">
+      <footer className="bg-gray-900 text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
